@@ -1,25 +1,28 @@
 package ru.mipt.bit.platformer.core;
 
-import ru.mipt.bit.platformer.util.Vector2D;
+import com.badlogic.gdx.math.Vector2;
 
 public abstract class Pawn extends GameObject {
     public Pawn(Transform transform) {
         super(transform);
     }
 
-    public Pawn(Vector2D position, float rotation) {
+    public Pawn(Vector2 position, float rotation) {
         super(position, rotation);
     }
 
+    @Override
     public void setTransform(Transform transform) {
-        this.transform = transform;
+        super.setTransform(transform);
     }
 
-    public void setPosition(Vector2D position) {
-        this.transform.position.setLocation(position);
+    @Override
+    public void setPosition(Vector2 position) {
+        super.setPosition(position);
     }
 
+    @Override
     public void setRotation(float rotation) {
-        this.transform.rotation = rotation;
+        super.setRotation(rotation);
     }
 }

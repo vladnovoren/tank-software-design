@@ -1,14 +1,14 @@
 package ru.mipt.bit.platformer.core;
 
-import ru.mipt.bit.platformer.util.Vector2D;
+import com.badlogic.gdx.math.Vector2;
 
 public class Transform {
     public Transform() {
-        this.position = new Vector2D();
+        this.position = new Vector2();
     }
 
-    public Transform(Vector2D position, float rotation) {
-        this.position = new Vector2D(position.x, position.y);
+    public Transform(Vector2 position, float rotation) {
+        this.position = new Vector2(position);
         this.rotation = rotation;
     }
 
@@ -17,10 +17,10 @@ public class Transform {
     }
 
     void copy(Transform other) {
-        this.position.setLocation(other.position);
+        this.position.set(other.position);
         this.rotation = other.rotation;
     }
 
-    public Vector2D position;
+    public Vector2 position;
     public float rotation;
 }
