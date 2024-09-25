@@ -1,6 +1,6 @@
 package ru.mipt.bit.platformer.core;
 
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.GridPoint2;
 
 public abstract class GameObject {
     public GameObject() {
@@ -11,8 +11,8 @@ public abstract class GameObject {
         this.transform = new Transform(transform);
     }
 
-    public GameObject(Vector2 position, float rotation) {
-        this.transform = new Transform(position, rotation);
+    public GameObject(GridPoint2 position, float rotation) {
+        transform = new Transform(position, rotation);
     }
 
     public abstract void tick(float dt);
@@ -25,13 +25,13 @@ public abstract class GameObject {
         this.transform.copy(transform);
     }
 
-    protected void setPosition(Vector2 position) {
-        this.transform.position.set(position);
+    protected void setPosition(GridPoint2 position) {
+        transform.position.set(position);
     }
 
     protected void setRotation(float rotation) {
-        this.transform.rotation = rotation;
+        transform.rotation = rotation;
     }
 
-    private Transform transform;
+    protected Transform transform;
 }

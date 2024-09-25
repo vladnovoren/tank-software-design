@@ -1,31 +1,30 @@
 package ru.mipt.bit.platformer.creatures;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import ru.mipt.bit.platformer.core.Direction;
 import ru.mipt.bit.platformer.core.GameObject;
-import ru.mipt.bit.platformer.core.Renderable;
 import ru.mipt.bit.platformer.util.TileMovement;
 
+import static com.badlogic.gdx.Input.Keys.*;
 import static com.badlogic.gdx.math.MathUtils.isEqual;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class Tank extends GameObject {
-    public Tank(float speed) {
+    public Tank(GridPoint2 position, float speed, TileMovement tileMovement) {
+        super(position, 0);
+        requestedDestination = new GridPoint2(position);
+        destination = new GridPoint2(position);
         this.speed = speed;
+        this.tileMovement = tileMovement;
     }
 
     @Override
     public void tick(float dt) {
-
+        move(dt, tileMovement);
+        processInput();
     }
-
-//    public Vector2 getDestination() {
-//        return destination;
-//    }
 
     public void move(float dt, TileMovement tileMovement) {
         interpolateMovement(tileMovement);
@@ -35,17 +34,59 @@ public class Tank extends GameObject {
         }
     }
 
-//    public void draw(Batch batch) {
-//        drawTextureRegionUnscaled(batch, textureRegion, bounds, rotation);
-//    }
-
     private void interpolateMovement(TileMovement tileMovement) {
-        tileMovement.moveRectangleBetweenTileCenters(bounds, position, destination, movementProgress);
+        tileMovement.moveRectangleBetweenTileCenters(bounds, transform.position, destination, movementProgress);
     }
 
-    protected Vector2 destination;
+    public GridPoint2 getRequestedDestination() {
+        return requestedDestination.cpy();
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(bounds);
+    }
+
+    public void commitRequestedDestination() {
+        destination.set(requestedDestination);
+    }
+
+    private void processInput() {
+        if (Gdx.input.isKeyPressed(UP) || Gdx.input.isKeyPressed(W)) {
+            if (isEqual(movementProgress, 1f)) {
+                requestedDestination.y++;
+                movementProgress = 0f;
+                transform.rotation = Direction.UP.getAngle();
+            }
+        }
+        if (Gdx.input.isKeyPressed(LEFT) || Gdx.input.isKeyPressed(A)) {
+            if (isEqual(movementProgress, 1f)) {
+                requestedDestination.x--;
+                movementProgress = 0f;
+                transform.rotation = Direction.LEFT.getAngle();
+            }
+        }
+        if (Gdx.input.isKeyPressed(DOWN) || Gdx.input.isKeyPressed(S)) {
+            if (isEqual(movementProgress, 1f)) {
+                requestedDestination.y--;
+                movementProgress = 0f;
+                transform.rotation = Direction.DOWN.getAngle();
+            }
+        }
+        if (Gdx.input.isKeyPressed(RIGHT) || Gdx.input.isKeyPressed(D)) {
+            if (isEqual(movementProgress, 1f)) {
+                requestedDestination.x++;
+                movementProgress = 0f;
+                transform.rotation = Direction.RIGHT.getAngle();
+            }
+        }
+    }
+
+    private GridPoint2 requestedDestination;
+    private GridPoint2 destination;
+    private Rectangle bounds;
 
     private float speed;
     private float movementProgress = 1.f;
     private float rotation;
+    private TileMovement tileMovement;
 }

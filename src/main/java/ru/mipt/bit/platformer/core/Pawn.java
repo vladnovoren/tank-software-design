@@ -1,13 +1,13 @@
 package ru.mipt.bit.platformer.core;
 
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.GridPoint2;
 
 public abstract class Pawn extends GameObject {
     public Pawn(Transform transform) {
         super(transform);
     }
 
-    public Pawn(Vector2 position, float rotation) {
+    public Pawn(GridPoint2 position, float rotation) {
         super(position, rotation);
     }
 
@@ -17,7 +17,7 @@ public abstract class Pawn extends GameObject {
     }
 
     @Override
-    public void setPosition(Vector2 position) {
+    public void setPosition(GridPoint2 position) {
         super.setPosition(position);
     }
 
