@@ -1,14 +1,14 @@
 package ru.mipt.bit.platformer.core;
 
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.GridPoint2;
 
 public class Transform {
     public Transform() {
-        this.position = new Vector2();
+        this.position = new GridPoint2();
     }
 
-    public Transform(Vector2 position, float rotation) {
-        this.position = new Vector2(position);
+    public Transform(GridPoint2 position, float rotation) {
+        this.position = new GridPoint2(position);
         this.rotation = rotation;
     }
 
@@ -21,6 +21,6 @@ public class Transform {
         this.rotation = other.rotation;
     }
 
-    public Vector2 position;
+    public GridPoint2 position;
     public float rotation;
 }
