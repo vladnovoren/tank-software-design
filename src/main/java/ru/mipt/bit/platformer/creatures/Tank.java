@@ -11,7 +11,7 @@ import static com.badlogic.gdx.Input.Keys.*;
 import static com.badlogic.gdx.math.MathUtils.isEqual;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
-public class Tank extends GameObject {
+public class Tank extends GameObject implements MovingGameObject {
     public Tank(GridPoint2 position, float speed, TileMovement tileMovement) {
         super(position, 0);
         requestedDestination = new GridPoint2(position);
@@ -38,16 +38,18 @@ public class Tank extends GameObject {
         tileMovement.moveRectangleBetweenTileCenters(bounds, transform.position, destination, movementProgress);
     }
 
+    @Override
     public GridPoint2 getRequestedDestination() {
         return requestedDestination.cpy();
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(bounds);
-    }
-
+    @Override
     public void commitRequestedDestination() {
         destination.set(requestedDestination);
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(bounds);
     }
 
     private void processInput() {
