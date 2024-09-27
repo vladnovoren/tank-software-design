@@ -86,6 +86,10 @@ public final class GdxGameUtils {
         return clamp(previousProgress + deltaTime / speed, 0f, 1f);
     }
 
+    public static GridPoint2 toGridPoint2(Vector2 vector) {
+        return new GridPoint2((int)vector.x, (int)vector.y);
+    }
+
     private static Vector2 calculateTileCenter(TiledMapTileLayer tileLayer, GridPoint2 tileCoordinates) {
         int tileWidth = tileLayer.getTileWidth();
         int tileHeight = tileLayer.getTileHeight();
