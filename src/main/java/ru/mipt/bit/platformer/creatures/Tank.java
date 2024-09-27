@@ -8,17 +8,15 @@ import ru.mipt.bit.platformer.core.GameObject;
 import ru.mipt.bit.platformer.util.TileMovement;
 
 import static com.badlogic.gdx.Input.Keys.*;
-import static com.badlogic.gdx.Input.Keys.D;
 import static com.badlogic.gdx.math.MathUtils.isEqual;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
-public class Tank extends GameObject {
-    public Tank(GridPoint2 position, float speed, Rectangle bounds, TileMovement tileMovement) {
+public class Tank extends GameObject implements MovingGameObject {
+    public Tank(GridPoint2 position, float speed, TileMovement tileMovement) {
         super(position, 0);
-        this.speed = speed;
-        this.bounds = new Rectangle(bounds);
         requestedDestination = new GridPoint2(position);
         destination = new GridPoint2(position);
+        this.speed = speed;
         this.tileMovement = tileMovement;
     }
 
@@ -36,12 +34,22 @@ public class Tank extends GameObject {
         }
     }
 
+    private void interpolateMovement(TileMovement tileMovement) {
+        tileMovement.moveRectangleBetweenTileCenters(bounds, transform.position, destination, movementProgress);
+    }
+
+    @Override
     public GridPoint2 getRequestedDestination() {
         return requestedDestination.cpy();
     }
 
+    @Override
     public void commitRequestedDestination() {
         destination.set(requestedDestination);
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(bounds);
     }
 
     private void processInput() {
@@ -75,16 +83,12 @@ public class Tank extends GameObject {
         }
     }
 
-    private void interpolateMovement(TileMovement tileMovement) {
-        tileMovement.moveRectangleBetweenTileCenters(bounds, transform.position, destination, movementProgress);
-    }
-
-    private float speed;
     private GridPoint2 requestedDestination;
     private GridPoint2 destination;
-    private float movementProgress = 1.f;
-
     private Rectangle bounds;
 
+    private float speed;
+    private float movementProgress = 1.f;
+    private float rotation;
     private TileMovement tileMovement;
 }

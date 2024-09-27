@@ -3,16 +3,14 @@ package ru.mipt.bit.platformer.creatures;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import ru.mipt.bit.platformer.core.Drawable;
 
-import static ru.mipt.bit.platformer.util.GdxGameUtils.drawTextureRegionUnscaled;
-
-public class RenderableTank implements Drawable {
-    public RenderableTank(Tank tank, TankSkin skin) {
+public class DrawableTank implements Drawable {
+    public DrawableTank(Tank tank, TankSkin skin) {
         this.tank = tank;
         this.skin = skin;
     }
 
     public void draw(Batch batch) {
-        skin.render(batch, tank.getTransform());
+        skin.draw(batch, tank.getTransform(), tank.getBounds());
     }
 
     private Tank tank;
