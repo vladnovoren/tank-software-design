@@ -1,6 +1,7 @@
 package ru.mipt.bit.platformer.creatures;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.core.Direction;
@@ -12,12 +13,13 @@ import static com.badlogic.gdx.math.MathUtils.isEqual;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class Tank extends GameObject implements MovingGameObject {
-    public Tank(GridPoint2 position, float speed, TileMovement tileMovement) {
+    public Tank(GridPoint2 position, float speed, Rectangle boundingRectangle, TileMovement tileMovement) {
         super(position, 0);
         requestedDestination = new GridPoint2(position);
         destination = new GridPoint2(position);
-        this.speed = speed;
         this.tileMovement = tileMovement;
+        setBounds(boundingRectangle);
+        this.speed = speed;
     }
 
     @Override
@@ -50,6 +52,11 @@ public class Tank extends GameObject implements MovingGameObject {
 
     public Rectangle getBounds() {
         return new Rectangle(bounds);
+    }
+
+    private void setBounds(Rectangle bounds) {
+        this.bounds = new Rectangle(bounds);
+        tileMovement.moveRectangleBetweenTileCenters(bounds, transform.position, transform.position, 1.0f);
     }
 
     private void processInput() {

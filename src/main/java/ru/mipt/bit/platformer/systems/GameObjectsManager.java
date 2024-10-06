@@ -1,7 +1,10 @@
 package ru.mipt.bit.platformer.systems;
 
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.core.Drawable;
+import ru.mipt.bit.platformer.core.GameObject;
 import ru.mipt.bit.platformer.creatures.DrawableTank;
 import ru.mipt.bit.platformer.creatures.MovingGameObject;
 import ru.mipt.bit.platformer.creatures.Tank;
@@ -13,16 +16,20 @@ import java.util.Collections;
 import java.util.List;
 
 public class GameObjectsManager {
-    public void addTank(GridPoint2 position, float speed, String texturePath, TileMovement tileMovement) {
-        drawables = new ArrayList<>();
-        movingObjects = new ArrayList<>();
+    public void tick(float dt) {
+        for (var gameObject : allGameObjects) {
+            gameObject.tick(dt);
+        }
+    }
 
-        var tank = new Tank(new GridPoint2(position), speed, tileMovement);
+    public void addTank(GridPoint2 position, float speed, String texturePath, TileMovement tileMovement) {
         var tankSkin = new TankSkin(texturePath);
+        var tank = new Tank(new GridPoint2(position), speed, tankSkin.getDefaultBoundingRectangle(), tileMovement);
         var drawableTank = new DrawableTank(tank, tankSkin);
 
         drawables.add(drawableTank);
         movingObjects.add(tank);
+        allGameObjects.add(tank);
     }
 
     public List<Drawable> getDrawables() {
@@ -33,6 +40,7 @@ public class GameObjectsManager {
         return Collections.unmodifiableList(movingObjects);
     }
 
-    private ArrayList<Drawable> drawables;
-    private ArrayList<MovingGameObject> movingObjects;
+    private final ArrayList<Drawable> drawables = new ArrayList<>();
+    private final ArrayList<MovingGameObject> movingObjects = new ArrayList<>();
+    private final ArrayList<GameObject> allGameObjects = new ArrayList<>();
 }

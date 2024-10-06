@@ -56,7 +56,7 @@ public class GameDesktopLauncher implements ApplicationListener {
 
     @Override
     public void render() {
-//        world.tick(0.0f);
+        world.tick(Gdx.graphics.getDeltaTime());
     }
 
     @Override

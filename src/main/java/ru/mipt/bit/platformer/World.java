@@ -19,13 +19,15 @@ public class World {
 
     void tick(float dt) {
         renderSystem.render();
+        gameObjectsManager.tick(dt);
+        collisionSystem.processMovingGameObjects(gameObjectsManager.getMovingObjects());
     }
 
-    private RenderSystem renderSystem;
+    private final RenderSystem renderSystem;
 
-    private Map map;
+    private final Map map;
 
-    private GameObjectsManager gameObjectsManager;
-    private CollisionSystem collisionSystem;
+    private final GameObjectsManager gameObjectsManager;
+    private final CollisionSystem collisionSystem;
 
 }
