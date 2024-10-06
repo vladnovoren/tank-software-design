@@ -5,10 +5,8 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Rectangle;
 import ru.mipt.bit.platformer.core.Drawable;
 import ru.mipt.bit.platformer.core.GameObject;
-import ru.mipt.bit.platformer.creatures.DrawableTank;
-import ru.mipt.bit.platformer.creatures.MovingGameObject;
-import ru.mipt.bit.platformer.creatures.Tank;
-import ru.mipt.bit.platformer.creatures.TankSkin;
+import ru.mipt.bit.platformer.core.Pawn;
+import ru.mipt.bit.platformer.creatures.*;
 import ru.mipt.bit.platformer.util.TileMovement;
 
 import java.util.ArrayList;
@@ -27,9 +25,19 @@ public class GameObjectsManager {
         var tank = new Tank(new GridPoint2(position), speed, tankSkin.getDefaultBoundingRectangle(), tileMovement);
         var drawableTank = new DrawableTank(tank, tankSkin);
 
+        allGameObjects.add(tank);
         drawables.add(drawableTank);
         movingObjects.add(tank);
-        allGameObjects.add(tank);
+    }
+
+    public void addTree(GridPoint2 position, String texturePath, TileMovement tileMovement) {
+        var treeSkin = new TreeSkin(texturePath);
+        var tree = new Tree(position, treeSkin.getDefaultBoundingRectangle(), tileMovement);
+        var drawableTree = new DrawableTree(tree, treeSkin);
+
+        allGameObjects.add(tree);
+        drawables.add(drawableTree);
+        staticObstacles.add(tree);
     }
 
     public List<Drawable> getDrawables() {
@@ -40,7 +48,12 @@ public class GameObjectsManager {
         return Collections.unmodifiableList(movingObjects);
     }
 
+    public List<Pawn> getStaticObstacles() {
+        return Collections.unmodifiableList(staticObstacles);
+    }
+
     private final ArrayList<Drawable> drawables = new ArrayList<>();
+    private final ArrayList<Pawn> staticObstacles = new ArrayList<>();
     private final ArrayList<MovingGameObject> movingObjects = new ArrayList<>();
     private final ArrayList<GameObject> allGameObjects = new ArrayList<>();
 }

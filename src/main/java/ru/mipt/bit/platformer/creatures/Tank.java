@@ -14,7 +14,7 @@ import static ru.mipt.bit.platformer.util.GdxGameUtils.*;
 
 public class Tank extends GameObject implements MovingGameObject {
     public Tank(GridPoint2 position, float speed, Rectangle boundingRectangle, TileMovement tileMovement) {
-        super(position, 0);
+        super(position, Direction.RIGHT.getAngle());
         requestedDestination = new GridPoint2(position);
         destination = new GridPoint2(position);
         this.tileMovement = tileMovement;
@@ -56,34 +56,34 @@ public class Tank extends GameObject implements MovingGameObject {
 
     private void setBounds(Rectangle bounds) {
         this.bounds = new Rectangle(bounds);
-        tileMovement.moveRectangleBetweenTileCenters(bounds, transform.position, transform.position, 1.0f);
+        tileMovement.moveRectangleBetweenTileCenters(this.bounds, transform.position, transform.position, 1.0f);
     }
 
     private void processInput() {
         if (Gdx.input.isKeyPressed(UP) || Gdx.input.isKeyPressed(W)) {
             if (isEqual(movementProgress, 1f)) {
-                requestedDestination.y++;
+                requestedDestination = transform.position.cpy().add(Direction.UP.getVector());
                 movementProgress = 0f;
                 transform.rotation = Direction.UP.getAngle();
             }
         }
         if (Gdx.input.isKeyPressed(LEFT) || Gdx.input.isKeyPressed(A)) {
             if (isEqual(movementProgress, 1f)) {
-                requestedDestination.x--;
+                requestedDestination = transform.position.cpy().add(Direction.LEFT.getVector());
                 movementProgress = 0f;
                 transform.rotation = Direction.LEFT.getAngle();
             }
         }
         if (Gdx.input.isKeyPressed(DOWN) || Gdx.input.isKeyPressed(S)) {
             if (isEqual(movementProgress, 1f)) {
-                requestedDestination.y--;
+                requestedDestination = transform.position.cpy().add(Direction.DOWN.getVector());
                 movementProgress = 0f;
                 transform.rotation = Direction.DOWN.getAngle();
             }
         }
         if (Gdx.input.isKeyPressed(RIGHT) || Gdx.input.isKeyPressed(D)) {
             if (isEqual(movementProgress, 1f)) {
-                requestedDestination.x++;
+                requestedDestination = transform.position.cpy().add(Direction.RIGHT.getVector());
                 movementProgress = 0f;
                 transform.rotation = Direction.RIGHT.getAngle();
             }

@@ -15,7 +15,7 @@ public abstract class GameObject {
         transform = new Transform(position, rotation);
     }
 
-    public abstract void tick(float dt);
+    public void tick(float dt) {}
 
     public Transform getTransform() {
         return new Transform(transform);

@@ -7,17 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CollisionSystem {
-    public void registerObstacle(Pawn obstacle) {
-        staticObstacles.add(obstacle);
-    }
-
-    public void processMovingGameObjects(List<? extends MovingGameObject> movingGameObjects) {
+    public void processMovingGameObjects(List<? extends MovingGameObject> movingGameObjects, List<? extends Pawn> staticObstacles) {
         for (var gameObject : movingGameObjects) {
-            processMovingGameObject(gameObject);
+            processMovingGameObject(gameObject, staticObstacles);
         }
     }
 
-    private void processMovingGameObject(MovingGameObject movingGameObject) {
+    private void processMovingGameObject(MovingGameObject movingGameObject, List<? extends Pawn> staticObstacles) {
         boolean commit = true;
         for (var obstacle : staticObstacles) {
             if (movingGameObject.getRequestedDestination().equals(obstacle.getTransform().position)) {
@@ -29,6 +25,4 @@ public class CollisionSystem {
             movingGameObject.commitRequestedDestination();
         }
     }
-
-    private final ArrayList<Pawn> staticObstacles = new ArrayList<>();
 }
