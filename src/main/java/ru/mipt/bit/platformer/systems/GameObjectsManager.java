@@ -14,6 +14,9 @@ import java.util.List;
 
 public class GameObjectsManager {
     public void addTank(GridPoint2 position, float speed, String texturePath, TileMovement tileMovement) {
+        drawables = new ArrayList<>();
+        movingObjects = new ArrayList<>();
+
         var tank = new Tank(new GridPoint2(position), speed, tileMovement);
         var tankSkin = new TankSkin(texturePath);
         var drawableTank = new DrawableTank(tank, tankSkin);

@@ -13,6 +13,6 @@ public class DrawableTank implements Drawable {
         skin.draw(batch, tank.getTransform(), tank.getBounds());
     }
 
-    private Tank tank;
-    private TankSkin skin;
+    private final Tank tank;
+    private final TankSkin skin;
 }

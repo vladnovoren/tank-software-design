@@ -19,11 +19,18 @@ public class Map {
         tileMovement = new TileMovement(groundLayer, Interpolation.smooth);
     }
 
+    public void render() {
+        levelRenderer.render();
+    }
+
+    public TileMovement getTileMovement() {
+        return tileMovement;
+    }
+
     private TiledMap level;
     private MapRenderer levelRenderer;
 
-    TiledMapTileLayer groundLayer;
+    private TiledMapTileLayer groundLayer;
 
     private TileMovement tileMovement;
-
 }
