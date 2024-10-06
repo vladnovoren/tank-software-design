@@ -11,17 +11,12 @@ import ru.mipt.bit.platformer.util.TileMovement;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.createSingleLayerMapRenderer;
 import static ru.mipt.bit.platformer.util.GdxGameUtils.getSingleLayer;
 
-public class Map implements Renderable {
+public class Map {
     public Map(String mapFileName, Batch batch) {
         level = new TmxMapLoader().load(mapFileName);
         levelRenderer = createSingleLayerMapRenderer(level, batch);
         groundLayer = getSingleLayer(level);
         tileMovement = new TileMovement(groundLayer, Interpolation.smooth);
-    }
-
-    @Override
-    public void render() {
-        levelRenderer.render();
     }
 
     private TiledMap level;
