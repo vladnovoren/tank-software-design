@@ -20,7 +20,7 @@ public class GameObjectsManager {
         }
     }
 
-    public void addTank(GridPoint2 position, float speed, String texturePath, TileMovement tileMovement) {
+    public Tank addTank(GridPoint2 position, float speed, String texturePath, TileMovement tileMovement) {
         var tankSkin = new TankSkin(texturePath);
         var tank = new Tank(new GridPoint2(position), speed, tankSkin.getDefaultBoundingRectangle(), tileMovement);
         var drawableTank = new DrawableTank(tank, tankSkin);
@@ -28,6 +28,8 @@ public class GameObjectsManager {
         allGameObjects.add(tank);
         drawables.add(drawableTank);
         movingObjects.add(tank);
+
+        return tank;
     }
 
     public void addTree(GridPoint2 position, String texturePath, TileMovement tileMovement) {

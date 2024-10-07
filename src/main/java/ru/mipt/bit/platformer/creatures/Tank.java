@@ -25,7 +25,6 @@ public class Tank extends GameObject implements MovingGameObject {
     @Override
     public void tick(float dt) {
         move(dt, tileMovement);
-        processInput();
     }
 
     public void move(float dt, TileMovement tileMovement) {
@@ -59,34 +58,11 @@ public class Tank extends GameObject implements MovingGameObject {
         tileMovement.moveRectangleBetweenTileCenters(this.bounds, transform.position, transform.position, 1.0f);
     }
 
-    private void processInput() {
-        if (Gdx.input.isKeyPressed(UP) || Gdx.input.isKeyPressed(W)) {
-            if (isEqual(movementProgress, 1f)) {
-                requestedDestination = transform.position.cpy().add(Direction.UP.getVector());
-                movementProgress = 0f;
-                transform.rotation = Direction.UP.getAngle();
-            }
-        }
-        if (Gdx.input.isKeyPressed(LEFT) || Gdx.input.isKeyPressed(A)) {
-            if (isEqual(movementProgress, 1f)) {
-                requestedDestination = transform.position.cpy().add(Direction.LEFT.getVector());
-                movementProgress = 0f;
-                transform.rotation = Direction.LEFT.getAngle();
-            }
-        }
-        if (Gdx.input.isKeyPressed(DOWN) || Gdx.input.isKeyPressed(S)) {
-            if (isEqual(movementProgress, 1f)) {
-                requestedDestination = transform.position.cpy().add(Direction.DOWN.getVector());
-                movementProgress = 0f;
-                transform.rotation = Direction.DOWN.getAngle();
-            }
-        }
-        if (Gdx.input.isKeyPressed(RIGHT) || Gdx.input.isKeyPressed(D)) {
-            if (isEqual(movementProgress, 1f)) {
-                requestedDestination = transform.position.cpy().add(Direction.RIGHT.getVector());
-                movementProgress = 0f;
-                transform.rotation = Direction.RIGHT.getAngle();
-            }
+    public void requestMovement(Direction direction) {
+        if (isEqual(movementProgress, 1f)) {
+            requestedDestination = transform.position.cpy().add(direction.getVector());
+            movementProgress = 0f;
+            transform.rotation = direction.getAngle();
         }
     }
 
